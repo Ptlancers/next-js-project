@@ -9,6 +9,9 @@ app: FastAPI = FastAPI()
 origins: tuple[str, str] = (
     "http://localhost",
     "http://localhost:3000"
+    "tauri://localhost", 
+    "https://tauri.localhost"
+    
 )
 
 app.add_middleware(

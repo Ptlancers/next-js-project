@@ -13,7 +13,7 @@ export default async function Page() {
 		id: "",
 		date: getCurrentDate(),
 		donor_registration_number: "",
-		donar_name: "",
+		donor_name: "",
 		receipt_number: "",
 		unique_identification_number: "",
 		address: "",

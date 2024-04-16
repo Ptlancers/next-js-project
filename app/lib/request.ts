@@ -5,6 +5,7 @@ const request = async (
 	method: string = "GET",
 	body: object | null = null
 ): Promise<Response> => {
+	
 	const config: RequestInit = {
 		method: method,
 		headers: {

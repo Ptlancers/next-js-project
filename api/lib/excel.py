@@ -39,8 +39,9 @@ def create_excel_file(filepath: str):
     ws.protection.sheet = True
     wb.save(filepath)
 
-
 def append_data_into_excel(data: dict, section_code: str):
+    del data['id']
+    print(data)
     if not os.path.exists(settings.excelFolderPath) and settings.excelFolderPath == "":
         find_documents_folder()
 
@@ -81,7 +82,7 @@ def update_data_into_excel(data: dict, section_code: str, receipt_number: str):
 
     Returns:
     - None
-    """
+    """    
     if not os.path.exists(settings.excelFolderPath) or settings.excelFolderPath == "":
         find_documents_folder()
 
@@ -94,8 +95,11 @@ def update_data_into_excel(data: dict, section_code: str, receipt_number: str):
     for sheet_name in wb.sheetnames:
         ws = wb[sheet_name]
         for row in ws.iter_rows(min_row=2, max_row=ws.max_row, min_col=2, max_col=ws.max_column):
+            print(row[2].value==receipt_number,row[2].value)
             if row[2].value == receipt_number:
-                for cell in row:
+                for index,cell in enumerate(row):
+                    if index==0:
+                        continue    
                     cell.value = list(data.values())[cell.column-2]
                 ws.protection.sheet = True
                 wb.save(file_path)

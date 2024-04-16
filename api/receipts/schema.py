@@ -9,17 +9,15 @@ class Receipt(BaseModel):
     donor_name: str = ""
     unique_identification_number: str = ""
     address: str = ""
-    donation_type: str = ""
-    mode_of_receipt: str = ""
+    donation_type: str = "corpus"
+    mode_of_receipt: str = "cash"
     transaction_id: str = ""
     donated_amount: str
-    donated_amount_letters: str = ""
+    donated_amount_letters: str 
 
     class Config:
         from_attributes = True
 
-class AllReceipt(BaseModel):
-    data=list[Receipt]
 
 class SearchResponse(Receipt):
     pass

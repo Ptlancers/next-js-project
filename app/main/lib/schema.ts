@@ -3,7 +3,7 @@ interface Receipt {
 	date: string;
 	donor_registration_number: string;
 	receipt_number: string;
-	donar_name: string;
+	donor_name: string;
 	unique_identification_number: string;
 	address: string;
 	transaction_id: string;

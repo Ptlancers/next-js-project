@@ -7,11 +7,13 @@ import Swal from "sweetalert2";
 import Form from "@/app/components/Form";
 import request from "@/app/lib/request";
 import { numberToText } from "@/app/lib/utility";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Receipt } from "@/app/main/lib/schema";
+import { Suspense } from "react";
 
 const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 	const router = useRouter();
+	const searchParams = useSearchParams();
 	const [data, setData] = useState(defaultProps);
 	const [button_text, setButtonText] = useState("create");
 	const [update_receipt_number, setUpdateReceiptNumber] = useState("");
@@ -28,7 +30,12 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 				router.push("/");
 			});
 	}, [router]);
+	const createParams = (id: string) => {
+		const params = new URLSearchParams(searchParams.toString());
+		params.set("id", id);
 
+		return params.toString();
+	};
 	const cleanUp = () => {
 		setData({ ...defaultProps });
 		setButtonText("create");
@@ -71,22 +78,6 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 		}
 	};
 
-	const handlePrintConfirmation = (id: string): void => {
-		Swal.fire({
-			title: "Print",
-			text: "Do you want to print this data?",
-			icon: "question",
-			showCancelButton: true,
-			confirmButtonText: "Print it!",
-			cancelButtonText: "Cancel",
-			reverseButtons: true,
-		}).then((result) => {
-			if (result.isConfirmed) {
-				router.push(`/print/${id}`);
-			}
-		});
-	};
-
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
 		const target = e.target as HTMLInputElement;
 		const searchText = target.value;
@@ -121,26 +112,33 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 				console.error("Error:", error);
 			});
 	};
-
+	const handlePrint = (id: string) => {
+		Swal.fire({
+			title: "Print Confirmation",
+			text: "Do you want to print?",
+			icon: "question",
+			showCancelButton: true,
+			confirmButtonText: "Print",
+			cancelButtonText: "Cancel",
+		}).then((result) => {
+			if (result.isConfirmed) {
+				router.push("/print?" + createParams(id));
+			}
+		});
+	};
 	const onSubmit = (
 		event: FormEvent<HTMLFormElement>,
 		callBackFunc: Function
 	): void => {
 		event.preventDefault();
 
-		const formData = new FormData(event.currentTarget);
-		const formDataJSON: { [key: string]: string } = {};
-
-		formData.forEach((val, key) => {
-			formDataJSON[key] = val.toString();
-		});
 		let url = "http://localhost:8000/api/receipt/insert-data";
 		let method = "post";
 		if (update_receipt_number) {
 			url = `http://localhost:8000/api/receipt/update-data/${data["id"]}`;
 			method = "put";
 		}
-		request(url, method, formDataJSON)
+		request(url, method, data)
 			.then((res) => {
 				if (res.ok) {
 					return res.json();
@@ -152,19 +150,19 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 					await Swal.fire({
 						icon: "success",
 						title: "success",
-						text: res_data.id,
+						text: res_data.detail,
 						timer: 2000,
 					});
 				})();
 				setTimeout(() => {
-					handlePrintConfirmation(res_data.id);
+					handlePrint(res_data.id);
 				}, 3000);
 				callBackFunc();
 			})
 			.catch((error) => {
 				Swal.fire({
 					icon: "error",
-					title: "error",
+					title: "Something Went wrong. Try again!",
 					text: error.message,
 				});
 			});
@@ -191,10 +189,10 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 			onBlur: handleSearch,
 		},
 		{
-			name: "donar_name",
-			label: "Donar Name",
+			name: "donor_name",
+			label: "Donor Name",
 			type: "text",
-			value: data.donar_name,
+			value: data.donor_name,
 		},
 		{
 			name: "unique_identification_number",
@@ -221,7 +219,7 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 			value: data.donated_amount,
 		},
 		{
-			name: "donated_amount_letter",
+			name: "donated_amount_letters",
 			label: "Donated Amount Letter",
 			type: "text",
 			disabled: true,
@@ -278,4 +276,9 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 	);
 };
 
-export default MainForm;
+const SuspenseComponent = ({ defaultProps }: { defaultProps: Receipt }) => (
+	<Suspense fallback={<div>Loading...</div>}>
+		<MainForm defaultProps={defaultProps}></MainForm>
+	</Suspense>
+);
+export default SuspenseComponent;

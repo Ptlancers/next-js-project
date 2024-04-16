@@ -51,9 +51,10 @@ export default function Home() {
 								Sign Up here
 							</Link>
 						</p>
-						<button 
-						type="submit"
-						className="bg-teal-500 hover:bg-teal-800 text-white font-semibold px-3 py-2 rounded-md shadow-sm shadow-black hover:shadow-none">
+						<button
+							type="submit"
+							className="bg-teal-500 hover:bg-teal-800 text-white font-semibold px-3 py-2 rounded-md shadow-sm shadow-black hover:shadow-none"
+						>
 							Login
 						</button>
 					</div>

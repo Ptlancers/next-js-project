@@ -13,7 +13,12 @@ async def get_data(user: dict = Depends(get_current_user)):
     receipts = DB.get_all_receipts(user.get("section_code"))
     return receipts
 
-
+@router.get("/get-by-id/{receipt_id:str}", status_code=status.HTTP_200_OK, response_model=schema.SearchResponse)
+async def get_data(receipt_id: str, user: dict = Depends(get_current_user)):
+    receipt = DB.get_receipt_by_id(receipt_id)
+    if receipt:
+        return receipt
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Data not found.")
 @router.get("/get-data/{receipt_number:str}", status_code=status.HTTP_200_OK, response_model=schema.SearchResponse)
 async def get_data(receipt_number: str, user: dict = Depends(get_current_user)):
     receipt = DB.get_receipt_by_receipt_no(receipt_number, user.get("section_code"))
@@ -40,5 +45,5 @@ async def update_data(data: schema.Receipt, receipt_id: str, user: dict = Depend
     section = schema.Section(**user).dict()
     data.update(section)
     updated_receipt = DB.update_receipt(receipt_id, data)
-    return {"detail": "Data stored successfully", "id":updated_receipt.get("id") }
+    return {"detail": "Data Update successfully", "id":updated_receipt.get("id") }
 

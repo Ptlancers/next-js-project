@@ -41,7 +41,7 @@ const LoginForm = ({ children }: { children: React.ReactNode }) => {
 
 		await request(
 			"http://localhost:8000/api/auth/sign-in",
-			"post",
+			"POST",
 			formDataJSON
 		)
 			.then((res) => {

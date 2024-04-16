@@ -3,15 +3,16 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev:backend": "./api/venv/Scripts/activate.bat && uvicorn api.index:app --reload",
+		"dev:backend": "uvicorn api.index:app --reload",
 		"dev:frontend": "next dev",
-		"dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+		"dev": "npm run dev:frontend",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
 		"tauri": "tauri"
 	},
 	"dependencies": {
+		"@tauri-apps/api": "^1.5.3",
 		"concurrently": "^8.2.2",
 		"js-cookie": "^3.0.5",
 		"next": "14.2.1",

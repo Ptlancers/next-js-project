@@ -42,7 +42,7 @@ class AuthDB:
 class ReceiptDB:
     @classmethod
     def create_receipt(cls, data: dict):
-        append_data_into_excel(data, data.get("section_code"))
+        append_data_into_excel(data.copy(), data.get("section_code"))
         collection: Collection = db.get_collection("receipts")
         if data.get("id") is not None:
             del data["id"]
@@ -59,7 +59,7 @@ class ReceiptDB:
         collection: Collection = db.get_collection("receipts")
         if data.get("id") is not None:
             del data["id"]
-        update_data_into_excel(data, data.get("section_code"), data.get("receipt_number"))
+        update_data_into_excel(data.copy(), data.get("section_code"), data.get("receipt_number"))
         res = collection.update_one({"_id": ObjectId(receipt_id)}, {"$set": data})
         return cls.get_receipt_by_id(receipt_id)
 
