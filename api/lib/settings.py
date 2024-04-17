@@ -21,6 +21,7 @@ class SettingsDefault:
                     self.databaseURL = "mongodb://localhost:27017/"
                     self.databaseName = "myapp"
                     self._file_path = "./settings.pickle"
+                    self.password = "admin"
                     self._load_settings()
 
     def _load_settings(self):

@@ -1,6 +1,6 @@
 "use client";
 import React, { FormEvent } from "react";
-import Form from "./Form";
+import Form from "@/app/components/Form";
 import request from "@/app/lib/request";
 import { setToken } from "@/app/lib/token";
 import { useRouter } from "next/navigation";

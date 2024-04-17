@@ -1,7 +1,8 @@
 import Link from "next/link";
-import InputWrapper from "./components/InputWrapper";
+import InputWrapper from "@/app/components/InputWrapper";
 import LoginForm from "./components/LoginForm";
-export default function Home() {
+
+export default function Page() {
 	const InputFields = [
 		{
 			name: "username",
@@ -43,7 +44,7 @@ export default function Home() {
 
 					<div className="flex flex-col space-y-3 p-3 items-center justify-center">
 						<p>
-							Dont have an account?{" "}
+							{"Don't have an account? "}
 							<Link
 								href="/sign-up"
 								className="text-sky-800 hover:underline font-semibold cursor-pointer hover:text-sky-500"

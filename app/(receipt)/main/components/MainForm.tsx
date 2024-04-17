@@ -8,7 +8,7 @@ import Form from "@/app/components/Form";
 import request from "@/app/lib/request";
 import { numberToText } from "@/app/lib/utility";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Receipt } from "@/app/main/lib/schema";
+import { Receipt } from "@/app/(receipt)/main/lib/schema";
 import { Suspense } from "react";
 
 const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {

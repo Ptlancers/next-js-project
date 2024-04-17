@@ -1,17 +1,16 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .receipts.router import router as r_router
-from .auth.router import router as a_router
+from receipt.router import router as receipt_router
+from auth.router import router as auth_router
 
 app: FastAPI = FastAPI()
 
-origins: tuple[str, str] = (
+origins: tuple[str, str, str, str] = (
     "http://localhost",
-    "http://localhost:3000"
-    "tauri://localhost", 
+    "http://localhost:3000",
+    "tauri://localhost",
     "https://tauri.localhost"
-    
 )
 
 app.add_middleware(
@@ -23,14 +22,13 @@ app.add_middleware(
 )
 
 
-
-@app.head("/",status_code=200)
+@app.head("/", status_code=200)
 async def read_root():
     return {"detail": "Connected Successfully!"}
 
 
-app.include_router(r_router)
-app.include_router(a_router)
+app.include_router(receipt_router)
+app.include_router(auth_router)
 
 if __name__ == "__main__":
     import uvicorn
@@ -52,8 +50,6 @@ if __name__ == "__main__":
         port: int = 8000
         if not is_server_running(host, port):
             uvicorn.run(app, host=host, port=port)
-        else:
-            print("Server is already running.")
 
 
     start_uv_server()

@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Body
 from fastapi.security import OAuth2PasswordBearer
-from api.lib import auth as a_utils
+from lib import token as a_utils
 
 from . import schema
-from api.database.database import AuthDB as DB
+from database.database import AuthDB as DB
 
 router = APIRouter(prefix="/api/auth")
 
@@ -27,7 +27,7 @@ async def get_current_user(token: str = Depends(oAuth2Bearer)) -> dict:
     return user
 
 
-@router.post("/sign-in", response_model=schema.Token)
+@router.post("/sign-in", response_model=schema.Token, status_code=status.HTTP_200_OK)
 async def sign_in(data: schema.SignInRequest):
     user: dict = authenticate_user(data)
     access_token: str = a_utils.create_access_token(data={"sub": user.get("id")})
@@ -38,7 +38,7 @@ async def sign_in(data: schema.SignInRequest):
 async def sign_up(data: schema.SignUpRequest):
     user: dict = DB.get_user_by_username(data.username)
     if user:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Username already registered")
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Username already registered")
     user: dict = DB.create_user(data.dict())
     access_token: str = a_utils.create_access_token(data={"sub": user.get("id")})
     return {"access_token": access_token, "token_type": "bearer"}

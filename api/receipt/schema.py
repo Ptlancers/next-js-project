@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 
 class Receipt(BaseModel):
-    id:str=""
+    id: str = ""
     date: str
     donor_registration_number: str
     receipt_number: str = ""
@@ -13,10 +13,7 @@ class Receipt(BaseModel):
     mode_of_receipt: str = "cash"
     transaction_id: str = ""
     donated_amount: str
-    donated_amount_letters: str 
-
-    class Config:
-        from_attributes = True
+    donated_amount_letters: str
 
 
 class SearchResponse(Receipt):
@@ -25,7 +22,7 @@ class SearchResponse(Receipt):
 
 class InsertResponse(BaseModel):
     detail: str
-    id:str
+    id: str
 
 
 class UpdateResponse(InsertResponse):
