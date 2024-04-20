@@ -18,18 +18,6 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 	const [button_text, setButtonText] = useState("create");
 	const [update_receipt_number, setUpdateReceiptNumber] = useState("");
 
-	useEffect(() => {
-		request("http://localhost:8000/api/auth/token")
-			.then((res) => {
-				if (res.ok) {
-					return res.json();
-				}
-				throw new Error(res.statusText);
-			})
-			.catch((error) => {
-				router.push("/");
-			});
-	}, [router]);
 	const createParams = (id: string) => {
 		const params = new URLSearchParams(searchParams.toString());
 		params.set("id", id);

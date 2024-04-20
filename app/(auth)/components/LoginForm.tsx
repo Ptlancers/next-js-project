@@ -63,7 +63,7 @@ const LoginForm = ({ children }: { children: React.ReactNode }) => {
 				Swal.fire({
 					icon: "error",
 					title: error.message,
-					text: "Invalid user credientials",
+					text: "Invalid user credentials",
 				});
 			});
 	}

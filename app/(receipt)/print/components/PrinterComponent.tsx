@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState ,Suspense} from "react";
+import React, { useEffect, useRef, useState, Suspense } from "react";
 import { useReactToPrint } from "react-to-print";
 import { useSearchParams, useRouter } from "next/navigation";
 import request from "@/app/lib/request";
@@ -43,7 +43,7 @@ const PrinterComponent = () => {
 	const handlePrint = useReactToPrint({
 		content: () => componentRef.current!,
 		onAfterPrint: () => {
-			router.push("/");
+			router.push("/main");
 		},
 	});
 

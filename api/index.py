@@ -48,6 +48,7 @@ if __name__ == "__main__":
     def start_uv_server():
         host: str = "127.0.0.1"
         port: int = 8000
+
         if not is_server_running(host, port):
             uvicorn.run(app, host=host, port=port)
 

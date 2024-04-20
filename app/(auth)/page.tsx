@@ -2,6 +2,12 @@ import Link from "next/link";
 import InputWrapper from "@/app/components/InputWrapper";
 import LoginForm from "./components/LoginForm";
 
+import type { Metadata } from "next";
+export const metadata: Metadata = {
+	title: "Sign In",
+	description: "Sign In page for Receipt Application",
+};
+
 export default function Page() {
 	const InputFields = [
 		{
@@ -22,7 +28,7 @@ export default function Page() {
 	];
 
 	return (
-		<main className="w-screen h-screen overflow-x-hidden overflow-y-auto flex flex-col items-center justify-center p-3">
+		<main className="w-full h-full overflow-x-hidden overflow-y-auto flex flex-col items-center justify-center p-3">
 			<div className="w-[80vw] lg:w-[42vw] h-auto flex-col items-center">
 				<LoginForm>
 					<h1 className="mb-4 text-2xl font-semibold text-center">

@@ -25,9 +25,8 @@ export default async function Page() {
 	};
 
 	return (
-		<main className="w-screen h-screen overflow-x-hidden overflow-y-auto flex flex-col items-center justify-center  py-8">
-			<Logout></Logout>
-			<div className="w-[80vw] lg:w-[42vw] h-full flex-col items-center">
+		<main className="w-full h-[100vh-3rem]  overflow-y-auto flex flex-col items-center justify-center">
+			<div className="w-[80vw] lg:w-[42vw] h-full flex-col items-center py-6">
 				<MainForm defaultProps={defaultProps}></MainForm>
 			</div>
 		</main>
