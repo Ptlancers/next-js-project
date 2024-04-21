@@ -221,7 +221,6 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 				onSubmit(e, cleanUp);
 			}}
 		>
-			<h1 className="mb-4 text-2xl font-semibold text-center">Receipt</h1>
 			{InputFields.map((field_data, index) => {
 				const { label, ...input_attribute } = field_data;
 				return (

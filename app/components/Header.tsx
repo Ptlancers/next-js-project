@@ -44,13 +44,13 @@ const Header: NextPage<Props> = ({}) => {
 	return (
 		<header className="w-full h-[3rem] px-5 flex justify-between items-center bg-gray-700 text-white">
 			<h1 className="font-semibold tracking-wider cursor-pointer hover:text-rose-500">
-				Receipt App
+				Receipt
 			</h1>
 			<Link
 				href={navigate_link}
-				className={`rounded-md text-white font-semibold underline underline-offset-2 hover:text-rose-500 ${
+				className={`rounded-md text-white font-semibold hover:text-rose-500 hover:underline hover:underline-offset-4 ease-in-out transition-all delay-150s ${
 					pathname === "/main" &&
-					"bg-red-500 no-underline px-2 p-0.5 hover:bg-red-800 hover:text-white"
+					"bg-red-500 px-2 p-0.5 hover:bg-red-800 hover:text-white hover:no-underline"
 				}`}
 				onClick={() => {
 					if (pathname === "/main") {
