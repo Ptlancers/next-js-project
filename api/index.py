@@ -26,9 +26,8 @@ app.add_middleware(
 async def read_root():
     return {"detail": "Connected Successfully!"}
 
-
-app.include_router(receipt_router)
-app.include_router(auth_router)
+app.include_router(auth_router,tags=["auth"])
+app.include_router(receipt_router,tags=["receipt"])
 
 if __name__ == "__main__":
     import uvicorn
