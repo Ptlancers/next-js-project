@@ -16,7 +16,7 @@ class SignUpRequest(Auth):
 
 
 class User(SignUpRequest):
-    pass
+    id: str
 
 
 class Token(BaseModel):
