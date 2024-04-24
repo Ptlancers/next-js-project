@@ -126,3 +126,26 @@ class ReceiptDB:
         result = list(cls.collection.aggregate(pipeline))
 
         return result[0]["total_amount"] if result else 0
+
+
+class DonorDB:
+    collection: Collection = db.get_collection("donor")
+
+    @classmethod
+    def create(cls, data: dict):
+        data["last_donated_date"] = data["date"]
+        result = cls.collection.insert_one(data)
+        return result
+
+    @classmethod
+    def update(cls, data: dict):
+        data["last_donated_date"] = data["date"]
+        del data["date"]
+        result = cls.collection.update_one({"unique_identification_number": data.get("unique_identification_number")},
+                                           {"$set": data})
+        return result
+
+    @classmethod
+    def read(cls, key: str) -> dict:
+        result: dict = cls.collection.find_one({"unique_identification_number": key})
+        return result

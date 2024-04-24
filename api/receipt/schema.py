@@ -1,6 +1,21 @@
 from pydantic import BaseModel
 
 
+class DonorDetail(BaseModel):
+    date: str
+    donor_name: str
+    donor_registration_number: str
+    unique_identification_number: str
+    address: str
+
+
+class DonorResponse(BaseModel):
+    donor_name: str
+    donor_registration_number: str
+    unique_identification_number: str
+    address: str
+
+
 class Receipt(BaseModel):
     id: str = ""
     date: str

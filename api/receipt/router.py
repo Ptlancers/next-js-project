@@ -10,6 +10,14 @@ router: APIRouter = APIRouter(
 )
 
 
+@router.get("/get-donor-detail/{unique_id:str}", status_code=status.HTTP_200_OK, response_model=schema.DonorResponse)
+async def get_data(unique_id: str, user: dict = Depends(get_current_user)):
+    receipt: dict = controller.read_donor_detail(unique_id)
+    if receipt:
+        return receipt
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Data not found.")
+
+
 @router.get("/get-by-id/{receipt_id:str}", status_code=status.HTTP_200_OK, response_model=schema.SearchResponse)
 async def get_data(receipt_id: str, user: dict = Depends(get_current_user)):
     receipt: dict = controller.get_data_by_receipt_id(receipt_id)

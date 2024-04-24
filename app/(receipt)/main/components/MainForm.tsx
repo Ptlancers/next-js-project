@@ -65,7 +65,39 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 			setButtonText("create");
 		}
 	};
+	
+	const handleDonor = (e: React.ChangeEvent<HTMLInputElement>): void => {
+		const target = e.target as HTMLInputElement;
+		const searchText = target.value;
 
+		request(`http://localhost:8000/api/receipt/get-donor-detail/${searchText}`)
+			.then((res) => {
+				if (res.ok) {
+					return res.json();
+				}
+				throw new Error(res.statusText);
+			})
+			.then((data) => {
+				Swal.fire({
+					title: "Data Found",
+					text: "Do you want to update this data?",
+					icon: "question",
+					showCancelButton: true,
+					confirmButtonText: "Yes",
+					cancelButtonText: "Cancel",
+					reverseButtons: true,
+				}).then((result) => {
+					if (result.isConfirmed) {
+						setData((prev) => ({ ...prev,...data }));
+					} else {
+						cleanUp();
+					}
+				});
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+			});
+	};
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
 		const target = e.target as HTMLInputElement;
 		const searchText = target.value;
@@ -168,6 +200,8 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 			label: "Donor Registration Number",
 			type: "text",
 			value: data.donor_registration_number,
+			onBlur:handleDonor
+
 		},
 		{
 			name: "receipt_number",
@@ -256,7 +290,7 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 					className="bg-red-500 hover:bg-red-800 text-white font-semibold px-3 py-2 rounded-md shadow-sm shadow-black hover:shadow-none"
 					onClick={handleClear}
 				>
-					Cancel
+					Clear
 				</button>
 			</div>
 		</Form>
