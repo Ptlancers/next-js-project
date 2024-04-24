@@ -15,11 +15,10 @@ const RadioButton: React.FC<InputProps> = ({ children, ...props }) => {
 			/>
 			<label
 				htmlFor={props.id}
-				className={`text-center text-sm font-semibold cursor-pointer inline-block px-3 py-2 rounded border border-gray-300 text-gray-700 hover:border-gray-800 ${
-					props.isChecked
-						? "shadow-none border-2 border-black"
+				className={`text-center text-sm font-semibold cursor-pointer inline-block px-3 py-2 rounded border border-gray-300 text-gray-700 hover:border-gray-800 ${props.isChecked
+						? "shadow-none border-2 border-sky-600"
 						: "shadow-sm shadow-black"
-				}`}
+					}`}
 			>
 				{children}
 			</label>

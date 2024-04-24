@@ -15,11 +15,11 @@
 
 # tauri
 /src-tauri/target/
-
+#ignore py cache
+*/__pycache__
 # production
 /build
-
-/venv/
+*/venv/
 # misc
 .DS_Store
 *.pem

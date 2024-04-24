@@ -6,9 +6,9 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import request from "@/app/lib/request";
 import { removeToken } from "@/app/lib/token";
-interface Props {}
+interface Props { }
 
-const Header: NextPage<Props> = ({}) => {
+const Header: NextPage<Props> = ({ }) => {
 	const [button_text, setButtonText] = useState("Sign Up");
 	const [navigate_link, setNavigateLink] = useState("/sign-up");
 	const pathname = usePathname();
@@ -43,15 +43,14 @@ const Header: NextPage<Props> = ({}) => {
 	}, [pathname, router]);
 	return (
 		<header className="w-full h-[3rem] px-5 flex justify-between items-center bg-gray-700 text-white">
-			<h1 className="font-semibold tracking-wider cursor-pointer hover:text-rose-500">
+			<h1 className="font-semibold tracking-wider cursor-pointer hover:text-rose-400">
 				Receipt
 			</h1>
 			<Link
 				href={navigate_link}
-				className={`rounded-md text-white font-semibold hover:text-rose-500 hover:underline hover:underline-offset-4 ease-in-out transition-all delay-150s ${
-					pathname === "/main" &&
-					"bg-red-500 px-2 p-0.5 hover:bg-red-800 hover:text-white hover:no-underline"
-				}`}
+				className={`rounded-md text-white font-semibold hover:tracking-wider hover:border-b-4 ease-in-out transition-all delay-150s ${pathname === "/main" &&
+					"bg-red-500 px-2 p-0.5 hover:bg-red-500 hover:text-white hover:border-b-red-800"
+					}`}
 				onClick={() => {
 					if (pathname === "/main") {
 						removeToken();

@@ -5,9 +5,9 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
 const InputWrapper: React.FC<InputProps> = ({ children, ...props }) => {
 	return (
-		<div className="w-full p-2 flex items-center justify-between">
+		<div className="w-full h-12 flex items-center  justify-between">
 			<label
-				className="w-1/2 block text-sm font-medium text-gray-700"
+				className="w-1/2 text-sm  font-extrabold text-black"
 				htmlFor={props.id}
 			>
 				{children}
