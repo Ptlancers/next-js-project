@@ -6,6 +6,7 @@ from lib.excel import append_data_into_excel, update_data_into_excel
 from lib.settings import settings
 from typing import Generator
 from datetime import datetime
+from lib import utils
 
 client = MongoClient(settings.databaseURL)
 db = client[settings.databaseName]
@@ -48,6 +49,7 @@ class ReceiptDB:
         excel_data = data.copy()
         if excel_data.get("id"):
             del excel_data["id"]
+        data["date"] = utils.string_to_datetime(data["date"])
         append_data_into_excel(excel_data, data.get("section_code"))
         res = cls.collection.insert_one(data)
         if not res.inserted_id:
@@ -62,6 +64,7 @@ class ReceiptDB:
         excel_data = data.copy()
         if excel_data.get("id"):
             del excel_data["id"]
+        data["date"] = utils.string_to_datetime(data["date"])
         update_data_into_excel(
             data.copy(), data.get("section_code"), data.get("receipt_number")
         )

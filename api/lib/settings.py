@@ -22,7 +22,25 @@ class SettingsDefault:
                     self.databaseName = "myapp"
                     self._file_path = "./settings.pickle"
                     self.password = "admin"
+                    self._find_documents_folder()
                     self._load_settings()
+
+    def _find_documents_folder(self) -> None:
+        home_directory: str = os.path.expanduser("~")
+
+        possible_paths: list[str] = [
+            os.path.join(home_directory, "Documents"),
+            os.path.join(home_directory, "My Documents"),
+        ]
+
+        for path in possible_paths:
+            if os.path.exists(path):
+                receipt_data_path: str = os.path.join(path, "receipt data")
+
+                if not os.path.exists(receipt_data_path):
+                    os.makedirs(receipt_data_path, exist_ok=True)
+                self.excelFolderPath = receipt_data_path
+                return
 
     def _load_settings(self):
         if os.path.exists(self._file_path) and os.path.getsize(self._file_path) > 0:
