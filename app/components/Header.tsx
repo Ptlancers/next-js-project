@@ -14,6 +14,8 @@ const Header: NextPage<Props> = ({ }) => {
 	const pathname = usePathname();
 	const router = useRouter();
 	useEffect(() => {
+		if (pathname === "/print")
+			return 
 		(async () => {
 			await request("http://localhost:8000/api/auth/token")
 				.then((res) => {
@@ -40,6 +42,7 @@ const Header: NextPage<Props> = ({ }) => {
 			setButtonText("Logout");
 			setNavigateLink("/");
 		}
+		
 	}, [pathname, router]);
 	return (
 		<header className="w-full h-[3rem] px-5 flex justify-between items-center bg-gray-700 text-white">

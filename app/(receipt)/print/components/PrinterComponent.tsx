@@ -28,11 +28,11 @@ const PrinterComponent = () => {
 							</span>
 						</div>
 						{key === "date" && (
-							<div className="w-screen h-20 text-2xl text-center muttName">
+							<div className="w-screen h-20  text-center muttName">
 								<h1>
-									Shri Sringari Sharatha Mutt
-									<h2>Shengottai-627809</h2>
+									SENGOTTAI SRI SHARADAMBA CHARITABLE TRUST
 								</h1>
+								<h5>No.9,Premier Chambers,Tenkasi Road ,Sengottai-627809</h5>
 							</div>
 						)}
 					</div>
@@ -45,6 +45,7 @@ const PrinterComponent = () => {
 		onAfterPrint: () => {
 			router.push("/main");
 		},
+		
 	});
 
 	const fetchData = async (id: string) => {
@@ -58,17 +59,16 @@ const PrinterComponent = () => {
 		}
 	};
 
-	useEffect(() => {
-		if (id) {
-			fetchData(id);
-		}
-	}, [id]);
-
-	useEffect(() => {
-		if (printData) {
-			handlePrint();
-		}
-	}, [handlePrint, printData]);
+	// useEffect(() => {
+	// 	if (id) {
+	// 		fetchData(id);
+	// 	}
+	// }, [id]);
+	// useEffect(() => {
+	// 	if (printData) {
+	// 		handlePrint();
+	// 	}
+	// }, [handlePrint, printData]);
 
 	return (
 		<div className="printer-component">
