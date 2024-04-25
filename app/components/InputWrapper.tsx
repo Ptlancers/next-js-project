@@ -7,7 +7,7 @@ const InputWrapper: React.FC<InputProps> = ({ children, ...props }) => {
 	return (
 		<div className="w-full h-12 flex items-center  justify-between">
 			<label
-				className="w-1/2 text-sm  font-extrabold text-black"
+				className="w-1/2 text-sm  font-extrabold text-black tracking"
 				htmlFor={props.id}
 			>
 				{children}

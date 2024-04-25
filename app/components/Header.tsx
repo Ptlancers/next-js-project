@@ -48,8 +48,8 @@ const Header: NextPage<Props> = ({ }) => {
 			</h1>
 			<Link
 				href={navigate_link}
-				className={`rounded-md text-white font-semibold hover:tracking-wider hover:border-b-4 ease-in-out transition-all delay-150s ${pathname === "/main" &&
-					"bg-red-500 px-2 p-0.5 hover:bg-red-500 hover:text-white hover:border-b-red-800"
+				className={`rounded-md text-white font-semibold hover:tracking-wider hover:border-b-4  ease-in-out transition-all delay-150s  ${pathname === "/main" ?
+					"bg-red-500 px-2 p-0.5 hover:bg-red-500 hover:text-white hover:border-b-red-800" :'bg-green-500 p-1 hover:border-b-green-700'
 					}`}
 				onClick={() => {
 					if (pathname === "/main") {

@@ -14,7 +14,7 @@ const ModeOfReceipt = ({
 	];
 	return (
 		<div className="w-full p-2 flex items-center justify-between">
-			<label className="w-1/2 block text-sm font-medium text-gray-700">
+			<label className="w-1/2 block text-sm font-extrabold text-black tracking-wide">
 				Mode Of Receipt
 			</label>
 			<div className="w-1/2 py-2 space-x-2 flex justify-evenly">
