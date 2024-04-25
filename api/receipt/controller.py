@@ -21,7 +21,7 @@ def check_receipt_no_exits(receipt_number: str, section_code: str) -> bool:
 def create_receipt(data: dict) -> str:
     donor_data: dict = schema.DonorDetail(**data).dict()
     if not D_DB.read(donor_data.get("unique_identification_number")):
-        create_receipt(donor_data)
+        D_DB.create(donor_data)
     else:
         D_DB.update(donor_data)
     new_receipt = R_DB.create_receipt(data)

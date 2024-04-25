@@ -49,7 +49,7 @@ class ReceiptDB:
         excel_data = data.copy()
         if excel_data.get("id"):
             del excel_data["id"]
-        data["date"] = utils.string_to_datetime(data["date"])
+        data["date"] = utils.clean_date_format(date["date"])
         append_data_into_excel(excel_data, data.get("section_code"))
         res = cls.collection.insert_one(data)
         if not res.inserted_id:
@@ -64,7 +64,8 @@ class ReceiptDB:
         excel_data = data.copy()
         if excel_data.get("id"):
             del excel_data["id"]
-        data["date"] = utils.string_to_datetime(data["date"])
+        data["date"] = utils.clean_date_format(date["date"])
+
         update_data_into_excel(
             data.copy(), data.get("section_code"), data.get("receipt_number")
         )
@@ -105,8 +106,8 @@ class ReceiptDB:
     def current_month_total(cls, section_code: str) -> float:
         current_month = datetime.now().month
 
-        start_date = datetime(datetime.now().year, current_month, 1)
-        end_date = datetime(datetime.now().year, current_month + 1, 1)
+        start_date = utils.clean_date_format(datetime(datetime.now().year, current_month, 1))
+        end_date = utils.clean_date_format(datetime(datetime.now().year, current_month + 1, 1))
 
         pipeline = [
             {
@@ -133,16 +134,21 @@ class DonorDB:
 
     @classmethod
     def create(cls, data: dict):
+        data["date"] = utils.clean_date_format(data["date"])
         data["last_donated_date"] = data["date"]
         result = cls.collection.insert_one(data)
         return result
 
     @classmethod
     def update(cls, data: dict):
-        data["last_donated_date"] = data["date"]
+        data["last_donated_date"] = utils.string_to_datetime(data["date"])
+
         del data["date"]
-        result = cls.collection.update_one({"unique_identification_number": data.get("unique_identification_number")},
-                                           {"$set": data})
+
+        result = cls.collection.update_one(
+            {"unique_identification_number": data.get("unique_identification_number")},
+            {"$set": data},
+        )
         return result
 
     @classmethod

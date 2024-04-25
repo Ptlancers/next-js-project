@@ -17,15 +17,15 @@ class SettingsDefault:
             with self._lock:
                 if not hasattr(self, '_initialized'):
                     self._initialized = True
-                    self.excelFolderPath = ""
+                    self.excelFolderPath = self.find_documents_folder()
                     self.databaseURL = "mongodb://localhost:27017/"
                     self.databaseName = "myapp"
                     self._file_path = "./settings.pickle"
                     self.password = "admin"
-                    self._find_documents_folder()
                     self._load_settings()
 
-    def _find_documents_folder(self) -> None:
+    @staticmethod
+    def find_documents_folder() -> str:
         home_directory: str = os.path.expanduser("~")
 
         possible_paths: list[str] = [
@@ -39,8 +39,7 @@ class SettingsDefault:
 
                 if not os.path.exists(receipt_data_path):
                     os.makedirs(receipt_data_path, exist_ok=True)
-                self.excelFolderPath = receipt_data_path
-                return
+                return receipt_data_path
 
     def _load_settings(self):
         if os.path.exists(self._file_path) and os.path.getsize(self._file_path) > 0:
