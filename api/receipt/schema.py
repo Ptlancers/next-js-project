@@ -31,6 +31,12 @@ class Receipt(BaseModel):
     donated_amount_letters: str
 
 
+class PrintResponse(Receipt):
+    section_code: str
+    unique_registration_number: str
+    date_insurance_of_urn: str
+
+
 class SearchResponse(Receipt):
     pass
 
