@@ -1,14 +1,17 @@
 import os
-from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl import Workbook, load_workbook
+from openpyxl.utils.dataframe import dataframe_to_rows
 from openpyxl.styles import Protection
 import pandas as pd
-from .settings import settings
+from .settings import settings  # Assuming settings.py is in the same directory
 from .utils import get_month_and_year, replace_dashes_with_space
 
 
 def create_excel_file(filepath: str):
     wb = Workbook()
+    wb.security.lockStructure = True  # Locks the structure of the workbook
+    wb.security.lockWindows = True  # Locks the position of the workbook window
+    wb.security.lockRevision = True  # Locks revision tracking in the workbook
     for ws in wb.worksheets:
         ws.protection.sheet = True
         ws.protection.password = settings.password
@@ -16,13 +19,13 @@ def create_excel_file(filepath: str):
 
 
 def create_excel_sheet(wb: Workbook, sheet_name: str, titles: list[str]):
-    ws = wb.create_sheet(title=sheet_name)
-    ws.append(titles)
+    if sheet_name not in wb.sheetnames:
+        ws = wb.create_sheet(title=sheet_name)
+        ws.append(titles)
 
 
 def append_data_into_excel(data: dict, section_code: str) -> None:
     month, year = get_month_and_year(data["date"])
-
     file_path = os.path.join(
         settings.excelFolderPath, f"{section_code}-receipt-{year}.xlsx"
     )
@@ -33,8 +36,7 @@ def append_data_into_excel(data: dict, section_code: str) -> None:
     wb = load_workbook(file_path)
     sheet_name: str = month
     titles: list[str] = ["Serial Number"] + list(replace_dashes_with_space(data).keys())
-    if sheet_name not in wb.sheetnames:
-        create_excel_sheet(wb, sheet_name, titles)
+    create_excel_sheet(wb, sheet_name, titles)
 
     ws = wb[sheet_name]
     data_with_serial = {"Serial Number": len(ws["A"])}
@@ -50,10 +52,6 @@ def append_data_into_excel(data: dict, section_code: str) -> None:
     ):
         for cell in row:
             cell.protection = Protection(locked=True)
-
-    for ws in wb.worksheets:
-        ws.protection.sheet = True
-        ws.protection.password = settings.password
 
     wb.save(file_path)
 

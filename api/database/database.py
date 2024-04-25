@@ -62,14 +62,15 @@ class ReceiptDB:
     @classmethod
     def update_receipt(cls, receipt_id: str, data: dict):
         excel_data = data.copy()
+        update_data_into_excel(
+            data.copy(), data.get("section_code"), data.get("receipt_number")
+        )
         if excel_data.get("id"):
             del excel_data["id"]
         data["date"] = utils.clean_date_format(data["date"])
 
-        update_data_into_excel(
-            data.copy(), data.get("section_code"), data.get("receipt_number")
-        )
         res = cls.collection.update_one({"_id": ObjectId(receipt_id)}, {"$set": data})
+        print(f"{res.matched_count=}")
         if not res.matched_count:
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -150,12 +151,12 @@ class DonorDB:
         del data["date"]
 
         result = cls.collection.update_one(
-            {"unique_identification_number": data.get("unique_identification_number")},
+            {"donor_registration_number": data.get("donor_registration_number")},
             {"$set": data},
         )
         return result
 
     @classmethod
     def read(cls, key: str) -> dict:
-        result: dict = cls.collection.find_one({"unique_identification_number": key})
+        result: dict = cls.collection.find_one({"donor_registration_number": key})
         return result

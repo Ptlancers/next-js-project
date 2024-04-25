@@ -18,7 +18,7 @@ def clean_date_format(date_string: str | datetime) -> str:
 
 
 def string_to_datetime(date_string: str) -> date:
-    date_object: date = datetime.strptime(date_string, '%Y-%m-%d').date()
+    date_object: date = datetime.strptime(date_string, "%Y-%m-%d").date()
     return date_object
 
 
