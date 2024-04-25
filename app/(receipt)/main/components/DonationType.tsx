@@ -14,7 +14,7 @@ const DonationType = ({
 	return (
 		<div className="w-full p-2 flex items-center justify-between">
 			<label
-				className="w-1/2 block text-sm font-medium text-gray-700"
+				className="w-1/2 block text-sm font-extrabold text-black tracking-wide "
 				htmlFor={"donation_type"}
 			>
 				Donation Type
