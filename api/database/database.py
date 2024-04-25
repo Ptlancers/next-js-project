@@ -49,7 +49,7 @@ class ReceiptDB:
         excel_data = data.copy()
         if excel_data.get("id"):
             del excel_data["id"]
-        data["date"] = utils.clean_date_format(date["date"])
+        data["date"] = utils.clean_date_format(data["date"])
         append_data_into_excel(excel_data, data.get("section_code"))
         res = cls.collection.insert_one(data)
         if not res.inserted_id:
@@ -64,7 +64,7 @@ class ReceiptDB:
         excel_data = data.copy()
         if excel_data.get("id"):
             del excel_data["id"]
-        data["date"] = utils.clean_date_format(date["date"])
+        data["date"] = utils.clean_date_format(data["date"])
 
         update_data_into_excel(
             data.copy(), data.get("section_code"), data.get("receipt_number")
@@ -80,7 +80,7 @@ class ReceiptDB:
     @classmethod
     def get_receipt_by_receipt_no(cls, receipt_no: str, section_code: str) -> dict:
         res = cls.collection.find_one(
-            {"receipt_number": receipt_no, "section_code": section_code}, {"_id": 0}
+            {"receipt_number": receipt_no, "section_code": section_code}
         )
         if res:
             res["id"] = str(res["_id"])
@@ -89,14 +89,14 @@ class ReceiptDB:
 
     @classmethod
     def get_receipt_by_id(cls, receipt_id: str) -> dict:
-        res = cls.collection.find_one({"_id": ObjectId(receipt_id)}, {"_id": 0})
+        res = cls.collection.find_one({"_id": ObjectId(receipt_id)})
         if res:
             res["id"] = str(receipt_id)
         return res
 
     @classmethod
     def get_all_receipts(cls, section_code: str) -> Generator:
-        cursor = cls.collection.find({"section_code": section_code}, {"_id": 0})
+        cursor = cls.collection.find({"section_code": section_code})
         for document in cursor:
             document["id"] = str(document["_id"])
             del document["_id"]
@@ -106,8 +106,12 @@ class ReceiptDB:
     def current_month_total(cls, section_code: str) -> float:
         current_month = datetime.now().month
 
-        start_date = utils.clean_date_format(datetime(datetime.now().year, current_month, 1))
-        end_date = utils.clean_date_format(datetime(datetime.now().year, current_month + 1, 1))
+        start_date = utils.clean_date_format(
+            datetime(datetime.now().year, current_month, 1)
+        )
+        end_date = utils.clean_date_format(
+            datetime(datetime.now().year, current_month + 1, 1)
+        )
 
         pipeline = [
             {
@@ -141,7 +145,7 @@ class DonorDB:
 
     @classmethod
     def update(cls, data: dict):
-        data["last_donated_date"] = utils.string_to_datetime(data["date"])
+        data["last_donated_date"] = utils.clean_date_format(data["date"])
 
         del data["date"]
 
