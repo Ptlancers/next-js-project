@@ -181,12 +181,13 @@ const PrinterComponent = () => {
 		)
 			.then((res) => {
 				if (res.ok) {
-					res.json();
+					return res.json();
 				}
 				throw new Error();
 			})
 			.catch(() => {
-				router.push("/main");
+				alert("error");
+				// router.push("/main");
 				return null;
 			});
 		setPrintData(response);

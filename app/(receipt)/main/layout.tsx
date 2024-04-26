@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Header from "@/app/(auth)/components/Header";
 export const metadata: Metadata = {
 	title: "Receipt Application",
 	description: "This application manage your Receipt",
@@ -8,5 +9,10 @@ export default function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
-	return <>{children}</>;
+	return (
+		<>
+			<Header></Header>
+			{children}
+		</>
+	);
 }
