@@ -11,25 +11,24 @@ router: APIRouter = APIRouter(prefix="/api/receipt")
 @router.get(
     "/get-donor-detail/{unique_id:str}",
     status_code=status.HTTP_200_OK,
-    response_model=schema.PrintResponse,
+    response_model=schema.DonorResponse,
 )
 async def get_data(unique_id: str, user: dict = Depends(get_current_user)):
-    receipt: dict = controller.read_donor_detail(unique_id)
-    receipt.update(user)
-    if receipt:
-        return receipt
+    donor_detail: dict = controller.read_donor_detail(unique_id)
+    if donor_detail:
+        return donor_detail
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Data not found.")
 
 
 @router.get(
     "/get-by-id/{receipt_id:str}",
     status_code=status.HTTP_200_OK,
-    response_model=schema.SearchResponse,
+    response_model=schema.PrintResponse,
 )
-async def get_data(receipt_id: str, user: dict = Depends(get_current_user)):
+async def get_data_by_id(receipt_id: str, user: dict = Depends(get_current_user)):
     receipt: dict = controller.get_data_by_receipt_id(receipt_id)
-
     if receipt:
+        receipt.update(user)
         return receipt
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Data not found.")
 
@@ -39,7 +38,9 @@ async def get_data(receipt_id: str, user: dict = Depends(get_current_user)):
     status_code=status.HTTP_200_OK,
     response_model=schema.SearchResponse,
 )
-async def get_data(receipt_number: str, user: dict = Depends(get_current_user)):
+async def get_data_by_receipt_no(
+    receipt_number: str, user: dict = Depends(get_current_user)
+):
     receipt: dict = controller.get_data_by_receipt_number(
         receipt_number, user.get("section_code")
     )

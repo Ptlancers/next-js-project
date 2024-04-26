@@ -17,7 +17,6 @@ class DonorResponse(BaseModel):
 
 
 class Receipt(BaseModel):
-    id: str = ""
     date: str
     donor_registration_number: str
     receipt_number: str = ""
@@ -32,13 +31,14 @@ class Receipt(BaseModel):
 
 
 class PrintResponse(Receipt):
+    id: str
     section_code: str
     unique_registration_number: str
     date_insurance_of_urn: str
 
 
 class SearchResponse(Receipt):
-    pass
+    id: str
 
 
 class InsertResponse(BaseModel):
