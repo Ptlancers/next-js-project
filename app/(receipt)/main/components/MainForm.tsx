@@ -98,6 +98,7 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 				console.error("Error:", error);
 			});
 	};
+	console.log("Receipt data",data)
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
 		const target = e.target as HTMLInputElement;
 		const searchText = target.value;
@@ -154,7 +155,8 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 
 		let url = "http://localhost:8000/api/receipt/insert-data";
 		let method = "post";
-		if (update_receipt_number) {
+		if (button_text === "update" ) {
+			console.error("in update",data)
 			url = `http://localhost:8000/api/receipt/update-data/${data["id"]}`;
 			method = "put";
 		}
@@ -248,7 +250,7 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 			value: data.donated_amount_letters,
 		},
 	];
-
+	
 	return (
 		<Form
 			onSubmit={(e: FormEvent<HTMLFormElement>) => {

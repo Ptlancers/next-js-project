@@ -31,7 +31,7 @@ def create_receipt(data: dict) -> str:
 def update_receipt(receipt_id: str, data: dict) -> str:
     donor_data: dict = schema.DonorDetail(**data).dict()
     if not D_DB.read(donor_data.get("unique_identification_number")):
-        create_receipt(donor_data)
+        D_DB.create(donor_data)
     else:
         D_DB.update(donor_data)
     updated_receipt = R_DB.update_receipt(receipt_id, data)

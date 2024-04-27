@@ -6,7 +6,6 @@ import pandas as pd
 from .settings import settings  # Assuming settings.py is in the same directory
 from .utils import get_month_and_year, replace_dashes_with_space
 
-
 def create_excel_file(filepath: str):
     wb = Workbook()
     wb.security.lockStructure = True  # Locks the structure of the workbook
@@ -68,16 +67,44 @@ def update_data_into_excel(data: dict, section_code: str, receipt_number: str) -
     wb = load_workbook(file_path)
     sheet_name: str = month
     ws = wb[sheet_name]
+    data = replace_dashes_with_space(data)
+
+    df = pd.DataFrame([data])
+
+    for r in dataframe_to_rows(df, index=False, header=False):
+        data = r
+        # print(r)
 
     for row in ws.iter_rows(
         min_row=2, max_row=ws.max_row, min_col=2, max_col=ws.max_column
     ):
+        print(f'{row[1]=}')
         if row[2].value == receipt_number:
-            for cell in row:
-                cell.value = data.get(cell.column_letter)
-
+            for index in range(len(data)):
+                cell = row[index+1]
+                value = data[index]
+                print(f'{cell= },{value = }')
+                # cell.value = data.get(cell.column_letter)
+                cell.value = value
             for cell in row:
                 cell.protection = Protection(locked=True)
 
             wb.save(file_path)
             return
+temp_data={
+    "date": '2024-04-27',
+    "donor_registration_number": '7395892580',
+    "receipt_number": '90',
+    "donor_name": 'vijayaKumar',
+    "unique_identification_number": '1234567890',
+    "address": 's,dncasddfnkwenrwu',
+    "donation_type": 'corpus',
+    "mode_of_receipt": 'digital',
+    "transaction_id": '1234567890',
+    "donated_amount": '501',
+    "donated_amount_letters": 'five hundred one',
+    "section_code": 'Section80',
+    "unique_registration_number": '1234567890',
+    "date_insurance_of_urn": '2024-04-05'
+}
+append_data_into_excel(temp_data,temp_data["section_code"])

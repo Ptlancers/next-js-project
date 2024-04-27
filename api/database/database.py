@@ -61,13 +61,13 @@ class ReceiptDB:
     @classmethod
     def update_receipt(cls, receipt_id: str, data: dict):
         excel_data = data.copy()
+        # if excel_data.get("id"):
+            # del excel_data["id"]
         update_data_into_excel(
-            data.copy(), data.get("section_code"), data.get("receipt_number")
+                excel_data, data.get("section_code"), data.get("receipt_number")
         )
-        if excel_data.get("id"):
-            del excel_data["id"]
         res = cls.collection.update_one({"_id": ObjectId(receipt_id)}, {"$set": data})
-        print(f"{res.matched_count=}")
+
         if not res.matched_count:
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
