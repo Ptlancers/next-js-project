@@ -49,7 +49,6 @@ class ReceiptDB:
         excel_data = data.copy()
         if excel_data.get("id"):
             del excel_data["id"]
-        data["date"] = utils.clean_date_format(data["date"])
         append_data_into_excel(excel_data, data.get("section_code"))
         res = cls.collection.insert_one(data)
         if not res.inserted_id:
@@ -67,8 +66,6 @@ class ReceiptDB:
         )
         if excel_data.get("id"):
             del excel_data["id"]
-        data["date"] = utils.clean_date_format(data["date"])
-
         res = cls.collection.update_one({"_id": ObjectId(receipt_id)}, {"$set": data})
         print(f"{res.matched_count=}")
         if not res.matched_count:
@@ -107,12 +104,8 @@ class ReceiptDB:
     def current_month_total(cls, section_code: str) -> float:
         current_month = datetime.now().month
 
-        start_date = utils.clean_date_format(
-            datetime(datetime.now().year, current_month, 1)
-        )
-        end_date = utils.clean_date_format(
-            datetime(datetime.now().year, current_month + 1, 1)
-        )
+        start_date = datetime(datetime.now().year, current_month, 1).strftime("%Y-%m-%d")
+        end_date = datetime(datetime.now().year, current_month + 1, 1).strftime("%Y-%m-%d")
 
         pipeline = [
             {
