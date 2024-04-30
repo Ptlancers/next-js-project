@@ -10,6 +10,7 @@ const DonationType = ({
 	let content_data = [
 		{ id: "corpus", value: "corpus" },
 		{ id: "others", value: "others" },
+		{id: "tuition_fee",value:"Tuition Fee"}
 	];
 	return (
 		<div className="w-full p-2 flex items-center justify-between">

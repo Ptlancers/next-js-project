@@ -15,4 +15,4 @@ interface PrintData {
 	unique_registration_number: string;
 	date_insurance_of_urn: string;
 }
-export { PrintData };
+export type { PrintData };

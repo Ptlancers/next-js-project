@@ -173,7 +173,8 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 						icon: "success",
 						title: "success",
 						text: res_data.detail,
-						timer: 2000,
+						timer: 1500,
+						showConfirmButton: false,
 					});
 				})();
 				setTimeout(() => {

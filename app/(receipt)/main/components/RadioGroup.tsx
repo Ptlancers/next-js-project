@@ -16,6 +16,7 @@ const RadioGroup = (props: RadioGroupAttribute) => {
 	return (
 		<>
 			{props.content_data.map((field_data, index) => {
+				
 				return (
 					<RadioButton
 						key={index}

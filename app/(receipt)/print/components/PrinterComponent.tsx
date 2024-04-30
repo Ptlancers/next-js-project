@@ -131,7 +131,7 @@ const PrinterComponent = () => {
 					</div>
 				</div>
 			</div>
-			<div className="row10 w-full   flex flex-row justify-between items-center">
+			<div className="row10 w-full gap-6   flex flex-row justify-between items-center">
 				<div
 					id="Trust details "
 					className="h-auto border-black border-4 rounded-md p-2"
