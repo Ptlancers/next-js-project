@@ -3,5 +3,6 @@
         "*.js": "javascript",
         "*.css": "css",
         "plyconfig.json": "jsonc"
-    }
+    },
+    "workbench.colorTheme": "One Dark Pro"
 }
