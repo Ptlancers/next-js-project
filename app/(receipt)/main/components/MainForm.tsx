@@ -104,11 +104,12 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 		const searchText = target.value;
 
 		request(`http://localhost:8000/api/receipt/get-data/${searchText}`)
-			.then((res) => {
+		.then(async (res) => {
+				let responseJson= await res.json();
 				if (res.ok) {
-					return res.json();
+					return responseJson
 				}
-				throw new Error(res.statusText);
+				throw new Error(responseJson.deatil);
 			})
 			.then((data) => {
 				Swal.fire({
@@ -161,11 +162,12 @@ const MainForm = ({ defaultProps }: { defaultProps: Receipt }) => {
 			method = "put";
 		}
 		request(url, method, data)
-			.then((res) => {
+			.then(async (res) => {
+				const responseJson = await res.json()
 				if (res.ok) {
-					return res.json();
+					return responseJson;
 				}
-				throw new Error(res.statusText);
+				throw new Error(responseJson.detail);
 			})
 			.then((res_data) => {
 				(async () => {

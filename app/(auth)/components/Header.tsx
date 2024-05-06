@@ -16,12 +16,13 @@ const Header: NextPage<Props> = ({ }) => {
 	useEffect(() => {
 		(async () => {
 			await request("http://localhost:8000/api/auth/token")
-				.then((res) => {
+				.then(async (res) => {
+					const responseJson = await res.json() 
 					if (res.ok) {
 						router.push("/main");
 						return true;
 					}
-					throw new Error();
+					throw new Error(responseJson.detail);
 				})
 				.catch(() => {
 					if (pathname === "/main") {

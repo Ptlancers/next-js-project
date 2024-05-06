@@ -16,6 +16,7 @@ const request = async (
 
 	if (body) {
 		config.body = JSON.stringify(body);
+		console.log("body",body)
 	}
 
 	return fetch(url, config);

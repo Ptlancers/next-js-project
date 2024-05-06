@@ -179,11 +179,12 @@ const PrinterComponent = () => {
 		const response = await request(
 			`http://localhost:8000/api/receipt/get-by-id/${id}`
 		)
-			.then((res) => {
+			.then(async (res) => {
+				const responseJson = await res.json();
 				if (res.ok) {
-					return res.json();
+					return responseJson;
 				}
-				throw new Error();
+				throw new Error(responseJson.detail);
 			})
 			.catch(() => {
 				alert("error");

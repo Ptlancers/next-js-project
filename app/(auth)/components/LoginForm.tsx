@@ -44,13 +44,15 @@ const LoginForm = ({ children }: { children: React.ReactNode }) => {
 			"POST",
 			formDataJSON
 		)
-			.then((res) => {
+			.then(async (res) => {
+				let jsonResponse = await res.json()
 				if (res.ok) {
-					return res.json();
+					return jsonResponse;
 				}
-				throw new Error(res.statusText);
+				throw new Error(jsonResponse.details);
 			})
 			.then((data) => {
+				console.log("data",data)
 				setToken(data.access_token);
 				Swal.fire({
 					icon: "success",
