@@ -7,7 +7,7 @@
 		"distDir": "../out"
 	},
 	"package": {
-		"productName": "my-app",
+		"productName": "Receipt",
 		"version": "0.1.0"
 	},
 	"tauri": {
